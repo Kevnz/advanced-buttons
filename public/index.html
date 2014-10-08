@@ -1,0 +1,68 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Pure Buttons</title>
+  <meta name="description" content="Buttons with Pure">
+  <meta name="author" content="Kevin Isom">
+
+  <link rel="stylesheet" href="css/pure.min.css" />
+  <style type="text/css">
+  	.wrapper {
+  		margin:50px;
+  		padding: 50px;
+  	}
+  	.pure-button-confirm .pure-button {
+  		margin-right: 20px;
+  	}
+  </style>
+</head>
+
+<body>
+	<div class="wrapper"> <a class="pure-button pure-button-confirm" href="#">Do Something</a>
+  </div>
+  	<script type="text/javascript">
+
+        var createButton = function (className) {
+            var but = document.createElement('a');
+            but.className = "pure-button";
+            if (but.classList) {
+                but.classList.add(className);
+            } else {
+                but.className += ' ' + className; 
+            }
+            return but;
+        }
+  		var button = document.querySelector('.pure-button-confirm');
+        var buttonText = button.innerHTML;
+
+  		button.addEventListener('click', function (e) {
+			e.preventDefault();
+			var className = "pure-button";
+			if (button.classList) {
+                button.classList.remove(className); 
+            }
+			else { 
+                button.className = button.className.replace(new RegExp('(^|\\b)' + className.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
+            }
+            var ok = createButton('pure-button-primary');
+            ok.innerHTML = 'Are you sure?';
+            var cancel = createButton('pure-button-cancel');
+            cancel.innerHTML ='No';
+            button.innerHTML = '';//<a href="#" class="pure-button pure-button-primary">Are you sure?</a><a href="#" class="pure-button">No</a>';
+  		
+
+            button.appendChild(ok);
+            button.appendChild(cancel);
+            document.querySelector('.pure-button-cancel').addEventListener('click', function (e) {
+                button.innerHTML = '';
+                console.log(buttonText);
+                button.innerHTML = buttonText;
+                e.preventDefault();
+            });
+        });
+  	</script>
+</body>
+</html>

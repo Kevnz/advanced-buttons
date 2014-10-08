@@ -1,0 +1,11 @@
+{
+  "name": "pure-buttons",
+  "version": "1.0.0",
+  "description": "Buttons that do stuff styled with pure",
+  "main": "index.js",
+  "scripts": {
+    "test": " "
+  },
+  "author": "Kevin Isom <kevin.isom@gmail.com>",
+  "license": "The Unlicense"
+}
