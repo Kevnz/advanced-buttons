@@ -16,6 +16,7 @@
   	}
   	.pure-button-confirm .pure-button {
   		margin-right: 20px;
+      transition
   	}
   </style>
 </head>
@@ -24,7 +25,13 @@
 	<div class="wrapper"> <a class="pure-button pure-button-confirm" href="#">Do Something</a>
   </div>
   	<script type="text/javascript">
-
+        var addClass = function (el, className) {
+            if (el.classList) {
+                el.classList.add(className);
+            } else {
+                el.className += ' ' + className; 
+            }
+        }
         var createButton = function (className) {
             var but = document.createElement('a');
             but.className = "pure-button";
@@ -37,14 +44,16 @@
         }
   		var button = document.querySelector('.pure-button-confirm');
         var buttonText = button.innerHTML;
-
-  		button.addEventListener('click', function (e) {
-			e.preventDefault();
-			var className = "pure-button";
-			if (button.classList) {
+        var mainButtonClick = function (e) {
+            console.log(arguments)
+            console.log('boom!')
+            e.preventDefault();
+            button.removeEventListener('click', mainButtonClick );
+            var className = "pure-button";
+            if (button.classList) {
                 button.classList.remove(className); 
             }
-			else { 
+            else { 
                 button.className = button.className.replace(new RegExp('(^|\\b)' + className.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
             }
             var ok = createButton('pure-button-primary');
@@ -52,17 +61,21 @@
             var cancel = createButton('pure-button-cancel');
             cancel.innerHTML ='No';
             button.innerHTML = '';//<a href="#" class="pure-button pure-button-primary">Are you sure?</a><a href="#" class="pure-button">No</a>';
-  		
+        
 
             button.appendChild(ok);
             button.appendChild(cancel);
-            document.querySelector('.pure-button-cancel').addEventListener('click', function (e) {
+            document.querySelector('.pure-button-cancel').addEventListener('click', function (ev) {
+                ev.cancelBubble = true;
                 button.innerHTML = '';
+                addClass(button, 'pure-button')
                 console.log(buttonText);
                 button.innerHTML = buttonText;
-                e.preventDefault();
+                ev.preventDefault();
+                button.addEventListener('click', mainButtonClick );
             });
-        });
+        }
+  		button.addEventListener('click', mainButtonClick );
   	</script>
 </body>
 </html>
